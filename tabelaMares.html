@@ -28,6 +28,7 @@
             var data = new google.visualization.DataTable();
             data.addColumn('datetime', 'Data');
             data.addColumn('number', 'Altura');
+			data.addColumn({type:'string', role:'annotation'});
 
             feed.load(function (result) {
                 if (!result.error) {
@@ -36,19 +37,23 @@
                     for (var i = 0; i < result.feed.entries.length; i++) {
                         var entry = result.feed.entries[i];
                         var rawRow = entry.title.split(' / ');
-                        var dateTime = new Date(rawRow[0]);
-                        var p = parseFloat(rawRow[1]);
-                        var l = rawRow[2];
-                        data.addRow([dateTime, p]);
+                        var d = new Date(rawRow[0]);
+						var h = parseFloat(rawRow[1]);
+						var t = rawRow[2];
+						var row = [d,h,t]
+						data.addRow(row);
 
                     }
                     console.log(data);
 
                     var options = {                        
                         title: 'Tabela de Mares' ,
+						vAxis:{format:'#,### m'},
+						hAxis:{format:'HH:mm'},
                         curveType: 'function',
-                        legend: 'none',
-                        vAxis: { format: '#,### m' }
+						legend: 'none',
+						width: 900,
+						height: 500                   
                     };
 
                     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
