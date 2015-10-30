@@ -13,19 +13,19 @@ namespace Models.Respositories
         private ModelDataContext context = new ModelDataContext();
         private bool disposed = false;
 
-        protected DbSet<T> DbSet { get; set; }
+        protected DbSet<T> DBSet { get; set; }
 
         public Repository()
         {
         
-            DbSet = context.Set<T>();
+            this.DBSet = context.Set<T>();
         }
 
         public List<T> GetAll()
         {
             context.Database.Log = Console.Write;
 
-            return DbSet.ToList();
+            return this.DBSet.ToList();
             
         }
 
@@ -33,21 +33,21 @@ namespace Models.Respositories
         public T Get(long id)
         {
             context.Database.Log = Console.Write; 
-            return DbSet.Find(id);
+            return this.DBSet.Find(id);
 
         }
 
         public void Delete(T entity)
         {
             context.Database.Log = Console.Write; 
-            DbSet.Remove(entity);
+            this.DBSet.Remove(entity);
             SaveChanges();
         }
 
         public void DeleteByID(long id)
         {
             context.Database.Log = Console.Write; 
-            DbSet.Remove(this.Get(id));
+            this.DBSet.Remove(this.Get(id));
 	    SaveChanges();
         }
 
@@ -61,7 +61,7 @@ namespace Models.Respositories
         public void Insert(T entity)
         {
             context.Database.Log = Console.Write; 
-            DbSet.Add(entity);
+            this.DBSet.Add(entity);
             SaveChanges();
         }
 
