@@ -1,1 +1,0 @@
-    internal static string ToJson(this object item) {        if (item == null)            return null;        var js = new System.Web.Script.Serialization.JavaScriptSerializer();        return js.Serialize(item);    }		
